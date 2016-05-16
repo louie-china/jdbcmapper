@@ -4,6 +4,7 @@ package com.louie.mapper;
 import net.sf.cglib.beans.BeanCopier;
 import org.springframework.jdbc.core.RowMapper;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Iterator;
@@ -12,7 +13,7 @@ import java.util.Map.Entry;
 /**
  * 抽象mapper
  */
-public abstract class BaseEO implements RowMapper {
+public abstract class BaseEO implements RowMapper,Serializable {
     private transient EOUtility eoutil = null;
     private BeanCopier bc = null;
     private BaseEO bean = null;

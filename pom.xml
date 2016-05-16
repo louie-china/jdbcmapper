@@ -3,10 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>cn.com.louie</groupId>
-    <artifactId>system-jdbc-mapper</artifactId>
-    <version>1.0.0</version>
+    <artifactId>spring-jdbc-mapper</artifactId>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
@@ -18,7 +17,7 @@
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
             <version>3.2.2</version>
-        </dependency>    
+        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
@@ -30,7 +29,7 @@
             <version>5.1.34</version>
         </dependency>
     </dependencies>
-    <name>ystem-jdbc-mapper</name>
+    <name>spring-jdbc-mapper</name>
     <description>A generic mapper component for spring-jdbc</description>
     <url>http://louie.com.cn</url>
     <licenses>
