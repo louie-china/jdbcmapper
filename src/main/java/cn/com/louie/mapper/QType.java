@@ -3,7 +3,7 @@
 // (powered by Fernflower decompiler)
 //
 
-package com.louie.mapper;
+package cn.com.louie.mapper;
 
 import java.lang.reflect.Type;
 

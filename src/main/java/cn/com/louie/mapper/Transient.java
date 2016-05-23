@@ -1,4 +1,4 @@
-package com.louie.mapper;
+package cn.com.louie.mapper;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

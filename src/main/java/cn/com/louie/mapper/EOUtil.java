@@ -1,7 +1,6 @@
+package cn.com.louie.mapper;
 
-package com.louie.mapper;
-
-import com.mysql.jdbc.StringUtils;
+import org.springframework.util.StringUtils;
 
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
@@ -13,28 +12,26 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
- * 实体工具类
+ * Created by Administrator on 2016/5/23.
  */
-public class EOUtility {
+public class EOUtil {
 
-    public transient BaseEO bean;
     private PropertyDescriptor[] propertyDescriptors;
-    private Class<? extends BaseEO> clazz;
+    private Class clazz;
     private Map<String, Method> getter;
     private Map<String, Method> setter;
     private Map<String, QType> colums;
     private String insertSQL;
     private String tableName;
-    private String primaryKey;
+    public String primaryKey;
     private String updateSQL;
     private String selectSQL;
 
-    public EOUtility(BaseEO bean) {
+    public EOUtil(Class clazz) {
         try {
-            this.init(bean);
+            this.init(clazz);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InstantiationException e) {
@@ -44,44 +41,43 @@ public class EOUtility {
 
     /**
      * 初始化加载
-     * @param bean
+     *
      * @throws IllegalAccessException
      * @throws InstantiationException
      */
 
-    private void init(BaseEO bean) throws IllegalAccessException, InstantiationException {
-        if (this.bean != bean) {
-            this.bean = bean;// bean.getClass().newInstance();
-            clazz = this.bean.getClass();
-            getter = new HashMap();
-            setter = new HashMap();
-            colums = null;
-            insertSQL = null;
-            tableName = null;
-            primaryKey = null;
-            selectSQL = null;
-            try {
-                propertyDescriptors = Introspector.getBeanInfo(clazz).getPropertyDescriptors();
-            } catch (IntrospectionException var3) {
-                var3.printStackTrace();
-            }
-            getColums();
-            gettableName();
+    private void init(Class clazz) throws IllegalAccessException, InstantiationException {
+        this.clazz = clazz;
+        getter = new HashMap();
+        setter = new HashMap();
+        colums = null;
+        insertSQL = null;
+        tableName = null;
+        primaryKey = null;
+        selectSQL = null;
+        try {
+            propertyDescriptors = Introspector.getBeanInfo(clazz).getPropertyDescriptors();
+        } catch (IntrospectionException var3) {
+            var3.printStackTrace();
         }
+        getColums();
+        gettableName();
+
 
     }
 
     /**
      * 获取表名
      * 标注不为空则取标注  否则取类名
+     *
      * @return
      */
     public String gettableName() {
         if (tableName != null) {
             return tableName;
         } else {
-            Table table = clazz.getAnnotation(Table.class);
-            if (table != null && !StringUtils.isNullOrEmpty(table.name())) {
+            Table table = (Table) clazz.getAnnotation(Table.class);
+            if (table != null && !StringUtils.isEmpty(table.name())) {
                 tableName = table.name();
             } else {
                 tableName = clazz.getSimpleName();
@@ -93,19 +89,20 @@ public class EOUtility {
 
     /**
      * 创建查询语句
+     *
      * @param whereSQL
      * @return
      */
     public String buildSelect(String whereSQL) {
 
         StringBuffer select = new StringBuffer("SELECT ");
-        for (Entry<String, QType> entry : getColums().entrySet()) {
+        for (Map.Entry<String, QType> entry : getColums().entrySet()) {
             select.append(entry.getValue().getKey() + ", ");
         }
         String slsql = select.toString().indexOf(",") == -1 ? null : select.toString().substring(0, select.toString().lastIndexOf(","));
         if (slsql == null)
             throw new IllegalArgumentException("beans must have an attr");
-        else if (StringUtils.isNullOrEmpty(whereSQL))
+        else if (StringUtils.isEmpty(whereSQL))
             selectSQL = slsql + " FROM " + gettableName();
         else
             selectSQL = slsql + " FROM " + gettableName() + " WHERE " + whereSQL;
@@ -114,6 +111,7 @@ public class EOUtility {
 
     /**
      * 获取bean的属性字段和数据库字段对应关系以及实体中的数据类型
+     *
      * @return
      */
     public Map<String, QType> getColums() {
@@ -149,13 +147,14 @@ public class EOUtility {
 
     /**
      * 调用set方法赋值
+     *
      * @param attName
      * @param value
      */
-    public void setAttributeValue(String attName, Object value) {
+    public void setAttributeValue(String attName, Object value,Object o) {
         try {
             Method m = setter.get(attName);
-            m.invoke(bean, value);
+            m.invoke(o, value);
         } catch (Exception var4) {
         }
 
@@ -163,6 +162,7 @@ public class EOUtility {
 
     /**
      * 判断是否是自增
+     *
      * @param field
      * @return
      */
@@ -176,9 +176,10 @@ public class EOUtility {
 
     /**
      * 构建插入语句
+     *
      * @return
      */
-    public String buildInsert() {
+    public String buildInsert(Object o) {
         Map filds = this.getColums();
         StringBuffer insert = new StringBuffer("INSERT INTO " + this.gettableName() + "(");
         StringBuffer values = new StringBuffer(" VALUES (");
@@ -186,7 +187,7 @@ public class EOUtility {
 
         while (true) {
             while (true) {
-                Entry ins;
+                Map.Entry ins;
                 do {
                     do {
                         if (!val.hasNext()) {
@@ -201,15 +202,15 @@ public class EOUtility {
                             insertSQL = ins1 + ")" + val1 + ")";
                             return insertSQL;
                         }
-                        ins = (Entry) val.next();
-                    } while (this.getAttributeValue((String) ins.getKey()) == null);
+                        ins = (Map.Entry) val.next();
+                    } while (this.getAttributeValue((String) ins.getKey(),o) == null);
                 } while (!this.isGenerate((String) ins.getKey()));
 
                 insert.append(((QType) ins.getValue()).getKey() + ",");
                 if (!isDigital(((QType) ins.getValue()).getType())) {
-                    values.append("\'" + this.getAttributeValue(((String) ins.getKey())).toString().replaceAll("'","\\\\'") + "\',");
+                    values.append("\'" + this.getAttributeValue(((String) ins.getKey()),o).toString().replaceAll("'", "\\\\'") + "\',");
                 } else {
-                    values.append(this.getAttributeValue((String) ins.getKey()) + ",");
+                    values.append(this.getAttributeValue((String) ins.getKey(),o) + ",");
                 }
             }
         }
@@ -218,43 +219,44 @@ public class EOUtility {
     /**
      * 构建更新语句
      * 没有传入更新条件时默认以id为条件
+     *
      * @param whereSQL
      * @return
      */
-    public String buildUpdate(String whereSQL) {
+    public String buildUpdate(String whereSQL,Object o) {
         Map filds = this.getColums();
         StringBuffer update = new StringBuffer("UPDATE " + this.gettableName() + " SET ");
         Iterator upsql = filds.entrySet().iterator();
 
         while (true) {
             while (true) {
-                Entry entry;
+                Map.Entry entry;
                 do {
                     do {
                         if (!upsql.hasNext()) {
                             String upsql1 = update.toString().indexOf(",") == -1 ? null : update.toString().substring(0, update.length() - 2);
-                            if (StringUtils.isNullOrEmpty(whereSQL)) {
+                            if (StringUtils.isEmpty(whereSQL)) {
                                 if (primaryKey == null) {
                                     throw new IllegalArgumentException("update must have an id or WhereSQL");
                                 }
                                 QType entry1 = (QType) filds.get(primaryKey);
                                 if (!isDigital(entry1.getType())) {
-                                    updateSQL = upsql1 + " WHERE " + ((QType) filds.get(primaryKey)).getKey() + "=\'" + this.getAttributeValue(primaryKey) + "\'";
+                                    updateSQL = upsql1 + " WHERE " + ((QType) filds.get(primaryKey)).getKey() + "=\'" + this.getAttributeValue(primaryKey,o) + "\'";
                                 } else {
-                                    updateSQL = upsql1 + " WHERE " + ((QType) filds.get(primaryKey)).getKey() + "=" + this.getAttributeValue(primaryKey);
+                                    updateSQL = upsql1 + " WHERE " + ((QType) filds.get(primaryKey)).getKey() + "=" + this.getAttributeValue(primaryKey,o);
                                 }
                             } else {
                                 updateSQL = upsql1 + " WHERE " + whereSQL;
                             }
                             return updateSQL;
                         }
-                        entry = (Entry) upsql.next();
-                    } while (this.getAttributeValue((String) entry.getKey()) == null);
+                        entry = (Map.Entry) upsql.next();
+                    } while (this.getAttributeValue((String) entry.getKey(),o) == null);
                 } while (entry.getKey().equals(primaryKey));
                 if (!isDigital(((QType) entry.getValue()).getType())) {
-                    update.append(((QType) entry.getValue()).getKey() + "=\'" +  this.getAttributeValue(((String) entry.getKey())).toString().replaceAll("'","\\\\'") + "\', ");
+                    update.append(((QType) entry.getValue()).getKey() + "=\'" + this.getAttributeValue(((String) entry.getKey()),o).toString().replaceAll("'", "\\\\'") + "\', ");
                 } else {
-                    update.append(((QType) entry.getValue()).getKey() + "=" + this.getAttributeValue((String) entry.getKey()) + ", ");
+                    update.append(((QType) entry.getValue()).getKey() + "=" + this.getAttributeValue((String) entry.getKey(),o) + ", ");
                 }
             }
         }
@@ -262,6 +264,7 @@ public class EOUtility {
 
     /**
      * 判断是否为数值类型
+     *
      * @param qType
      * @return
      */
@@ -283,10 +286,11 @@ public class EOUtility {
 
     /**
      * get方法取值
+     *
      * @param attName
      * @return
      */
-    public Object getAttributeValue(String attName) {
+    public Object getAttributeValue(String attName,Object bean) {
         Object o = null;
 
         try {
@@ -301,6 +305,7 @@ public class EOUtility {
 
     /**
      * 获取单列的数据库字段及实体类型
+     *
      * @param fieldName
      * @return
      */
@@ -317,7 +322,7 @@ public class EOUtility {
         }
 
         Column am = f.getAnnotation(Column.class);
-        if (am != null&&!StringUtils.isNullOrEmpty(am.name())) {
+        if (am != null && !StringUtils.isEmpty(am.name())) {
             column = am.name();
         } else {
             column = fieldName;
@@ -329,6 +334,7 @@ public class EOUtility {
 
     /**
      * 本来是准备做懒加载判断的  现在改成临时字段处理
+     *
      * @param annotations
      * @return
      */

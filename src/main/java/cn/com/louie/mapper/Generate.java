@@ -1,4 +1,4 @@
-package com.louie.mapper;
+package cn.com.louie.mapper;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,10 +7,9 @@ import java.lang.annotation.Target;
 
 /**
  * Created by Administrator on 2016/5/4.
- * 表名标注    未标注则取实体名字
+ * 自增标注
  */
-@Target({ElementType.TYPE})
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Table {
-    String name() default "";
+public @interface Generate {
 }

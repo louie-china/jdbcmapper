@@ -1,9 +1,12 @@
-import com.louie.mapper.*;
+import cn.com.louie.SqlSessionFactoryBean;
+import cn.com.louie.config.Configuration;
+import cn.com.louie.mapper.*;
 
 /**
  * Created by Administrator on 2016/5/9.
  * 这是一个测试类
  */
+@Entity
 @Table(name = "test")
 public class Test extends BaseEO {
     @Id
@@ -19,22 +22,29 @@ public class Test extends BaseEO {
     private String none;//测试临时字段标注
 
 
-    public static void main(String[] args) {
-        Test test = new Test();
-        test.setId(0);
-        test.setName("louie");
-        test.setEmail("louieluo@foxmail.com");
-        test.setLogs("this is a 'mapper' for spring-jdbc");
-        test.setNone("this is a test");
-        System.out.println(test.selectSQL(null));//生成查询sql  传入参数为条件   详情看下面注释的语句
-        System.out.println(test.updateSQL(null));//生成更新语句  默认以id为条件更新
-        System.out.println(test.insertSQL());//生成插入语句
+    public static void main(String[] args) throws Exception {
 
-//        JdbcTemplate jdbcTemplate = new JdbcTemplate(null);//This is an example of a JDBC call, so there is no data source
-//        List<Test> tests = jdbcTemplate.query(test.selectSQL("name=? and logs=?"), new Object[]{"louie", "test"}, test);//This is an example of a query with parameters
-//        int count = jdbcTemplate.update(test.insertSQL());//This is an example of an insert
-//        count=jdbcTemplate.update(test.updateSQL(null));//This is a default update
-//        count=jdbcTemplate.update(test.updateSQL("name=? or logs=?"),new Object[]{"louie","this is a 'mapper' for spring-jdbc"});
+        SqlSessionFactoryBean factory=new SqlSessionFactoryBean();
+
+        System.out.println(Configuration.getInstans().eoutils.size()+"xxxxxxxxxxxx");
+        EOUtil eoUtil=Configuration.getInstans().eoutils.get(Test.class.getSimpleName());
+
+
+//        Test test = new Test();
+//        test.setId(0);
+//        test.setName("louie");
+//        test.setEmail("louieluo@foxmail.com");
+//        test.setLogs("this is a 'mapper' for spring-jdbc");
+//        test.setNone("this is a test");
+//        System.out.println(test.selectSQL(null));//生成查询sql  传入参数为条件   详情看下面注释的语句
+//        System.out.println(test.updateSQL(null));//生成更新语句  默认以id为条件更新
+//        System.out.println(test.insertSQL());//生成插入语句
+//
+////        JdbcTemplate jdbcTemplate = new JdbcTemplate(null);//This is an example of a JDBC call, so there is no data source
+////        List<Test> tests = jdbcTemplate.query(test.selectSQL("name=? and logs=?"), new Object[]{"louie", "test"}, test);//This is an example of a query with parameters
+////        int count = jdbcTemplate.update(test.insertSQL());//This is an example of an insert
+////        count=jdbcTemplate.update(test.updateSQL(null));//This is a default update
+////        count=jdbcTemplate.update(test.updateSQL("name=? or logs=?"),new Object[]{"louie","this is a 'mapper' for spring-jdbc"});
     }
 
 
