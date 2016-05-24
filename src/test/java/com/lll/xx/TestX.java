@@ -1,3 +1,5 @@
+package com.lll.xx;
+
 import cn.com.louie.SqlSessionFactoryBean;
 import cn.com.louie.config.Configuration;
 import cn.com.louie.mapper.*;
@@ -8,7 +10,7 @@ import cn.com.louie.mapper.*;
  */
 @Entity
 @Table(name = "test")
-public class Test extends BaseEO {
+public class TestX extends BaseEO {
     @Id
     @Generate
     private int id;//测试id标注及自增标注
@@ -25,12 +27,14 @@ public class Test extends BaseEO {
     public static void main(String[] args) throws Exception {
 
         SqlSessionFactoryBean factory=new SqlSessionFactoryBean();
+        factory.setPackageScan("org.springframework.beans.factory.access");
 
         System.out.println(Configuration.getInstans().eoutils.size()+"xxxxxxxxxxxx");
-        EOUtil eoUtil=Configuration.getInstans().eoutils.get(Test.class.getSimpleName());
+        EOUtil eoUtil=Configuration.getInstans().eoutils.get(TestX.class.getSimpleName());
+        System.out.println(eoUtil.buildSelect(null));
+        System.out.println(eoUtil.gettableName());
 
-
-//        Test test = new Test();
+//        com.lll.TestX test = new com.lll.TestX();
 //        test.setId(0);
 //        test.setName("louie");
 //        test.setEmail("louieluo@foxmail.com");
@@ -41,7 +45,7 @@ public class Test extends BaseEO {
 //        System.out.println(test.insertSQL());//生成插入语句
 //
 ////        JdbcTemplate jdbcTemplate = new JdbcTemplate(null);//This is an example of a JDBC call, so there is no data source
-////        List<Test> tests = jdbcTemplate.query(test.selectSQL("name=? and logs=?"), new Object[]{"louie", "test"}, test);//This is an example of a query with parameters
+////        List<com.lll.TestX> tests = jdbcTemplate.query(test.selectSQL("name=? and logs=?"), new Object[]{"louie", "test"}, test);//This is an example of a query with parameters
 ////        int count = jdbcTemplate.update(test.insertSQL());//This is an example of an insert
 ////        count=jdbcTemplate.update(test.updateSQL(null));//This is a default update
 ////        count=jdbcTemplate.update(test.updateSQL("name=? or logs=?"),new Object[]{"louie","this is a 'mapper' for spring-jdbc"});

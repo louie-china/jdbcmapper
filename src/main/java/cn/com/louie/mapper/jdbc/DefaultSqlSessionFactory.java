@@ -1,6 +1,6 @@
-package cn.com.louie.jdbc;
+package cn.com.louie.mapper.jdbc;
 
-import cn.com.louie.config.Configuration;
+import cn.com.louie.mapper.config.Configuration;
 
 /**
  * Created by Administrator on 2016/5/23.

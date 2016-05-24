@@ -1,7 +1,7 @@
-package cn.com.louie.jdbc;
+package cn.com.louie.mapper.jdbc;
 
-import cn.com.louie.config.Configuration;
-import cn.com.louie.mapper.EOUtil;
+import cn.com.louie.mapper.config.Configuration;
+import cn.com.louie.mapper.mapper.EOUtil;
 import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;

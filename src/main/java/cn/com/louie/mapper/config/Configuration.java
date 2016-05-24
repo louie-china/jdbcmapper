@@ -1,12 +1,12 @@
-package cn.com.louie.config;
+package cn.com.louie.mapper.config;
 
-import cn.com.louie.cache.Cache;
-import cn.com.louie.cache.PerpetualCache;
-import cn.com.louie.cache.TimerCache;
-import cn.com.louie.jdbc.CacheExecutor;
-import cn.com.louie.jdbc.DefaultExecutor;
-import cn.com.louie.jdbc.Executor;
-import cn.com.louie.mapper.EOUtil;
+import cn.com.louie.mapper.cache.Cache;
+import cn.com.louie.mapper.cache.PerpetualCache;
+import cn.com.louie.mapper.cache.TimerCache;
+import cn.com.louie.mapper.jdbc.CacheExecutor;
+import cn.com.louie.mapper.jdbc.DefaultExecutor;
+import cn.com.louie.mapper.jdbc.Executor;
+import cn.com.louie.mapper.mapper.EOUtil;
 
 import javax.sql.DataSource;
 import java.util.HashMap;

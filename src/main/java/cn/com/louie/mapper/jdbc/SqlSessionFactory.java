@@ -1,4 +1,4 @@
-package cn.com.louie.jdbc;
+package cn.com.louie.mapper.jdbc;
 
 /**
  * Created by Administrator on 2016/5/23.

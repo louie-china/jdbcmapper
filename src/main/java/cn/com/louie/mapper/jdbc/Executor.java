@@ -1,4 +1,4 @@
-package cn.com.louie.jdbc;
+package cn.com.louie.mapper.jdbc;
 
 import java.io.Closeable;
 import java.sql.SQLException;

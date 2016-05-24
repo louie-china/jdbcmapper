@@ -1,11 +1,11 @@
-package cn.com.louie.jdbc;
+package cn.com.louie.mapper.jdbc;
 
-import cn.com.louie.cache.Cache;
-import cn.com.louie.cache.CacheKey;
-import cn.com.louie.cache.PerpetualCache;
-import cn.com.louie.config.Configuration;
-import cn.com.louie.mapper.EOUtil;
-import cn.com.louie.mapper.QType;
+import cn.com.louie.mapper.cache.Cache;
+import cn.com.louie.mapper.cache.CacheKey;
+import cn.com.louie.mapper.cache.PerpetualCache;
+import cn.com.louie.mapper.config.Configuration;
+import cn.com.louie.mapper.mapper.EOUtil;
+import cn.com.louie.mapper.mapper.QType;
 import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;

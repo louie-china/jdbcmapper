@@ -1,4 +1,4 @@
-package cn.com.louie.cache;
+package cn.com.louie.mapper.cache;
 
 import java.util.concurrent.locks.ReadWriteLock;
 

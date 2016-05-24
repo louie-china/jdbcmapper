@@ -1,11 +1,11 @@
-package cn.com.louie;
+package cn.com.louie.mapper;
 
-import cn.com.louie.config.Configuration;
-import cn.com.louie.jdbc.DefaultSqlSessionFactory;
-import cn.com.louie.jdbc.SqlSessionFactory;
-import cn.com.louie.mapper.EOUtil;
-import cn.com.louie.mapper.Entity;
-import cn.com.louie.mapper.PackageScan;
+import cn.com.louie.mapper.config.Configuration;
+import cn.com.louie.mapper.jdbc.DefaultSqlSessionFactory;
+import cn.com.louie.mapper.jdbc.SqlSessionFactory;
+import cn.com.louie.mapper.mapper.EOUtil;
+import cn.com.louie.mapper.mapper.Entity;
+import cn.com.louie.mapper.mapper.PackageScan;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
