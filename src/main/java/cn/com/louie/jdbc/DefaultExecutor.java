@@ -15,11 +15,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Created by Administrator on 2016/5/23.
  */
 public class DefaultExecutor implements Executor {
+    private final static Logger logger=Logger.getLogger("DefaultExecutor");
 
     private Cache localCache;
 
@@ -52,6 +54,8 @@ public class DefaultExecutor implements Executor {
             localCache.putObject(cacheKey, list);
             return list;
         } catch (SQLException e) {
+            logger.info(e.getMessage());
+            e.printStackTrace();
             return null;
         } finally {
             try {
