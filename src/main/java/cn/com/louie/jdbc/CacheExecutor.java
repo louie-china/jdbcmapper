@@ -53,7 +53,7 @@ public class CacheExecutor implements Executor {
         return list;
     }
 
-    public void close() throws IOException {
-
+    public void close() {
+        baseExecutor.close();
     }
 }

@@ -110,7 +110,9 @@ public class DefaultSqlSession implements SqlSession {
     }
 
 
-    public void close() throws IOException {
-        this.executor.close();
+    public void close(){
+
+            this.executor.close();
+
     }
 }

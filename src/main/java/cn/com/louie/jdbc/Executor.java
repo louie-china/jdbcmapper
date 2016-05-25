@@ -1,6 +1,7 @@
 package cn.com.louie.jdbc;
 
 import java.io.Closeable;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -17,4 +18,5 @@ public interface Executor extends Closeable {
 
     public List Query(String sql, Object parms);
 
+    void close();
 }

@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  * Created by Administrator on 2016/5/23.
  */
 public class DefaultExecutor implements Executor {
-    private final static Logger logger=Logger.getLogger("DefaultExecutor");
+    private final static Logger logger = Logger.getLogger("DefaultExecutor");
 
     private Cache localCache;
 
@@ -84,6 +84,7 @@ public class DefaultExecutor implements Executor {
                 localCache.clear();
             return count;
         } catch (SQLException e) {
+            e.printStackTrace();
             return 0;
         } finally {
             try {
@@ -115,6 +116,7 @@ public class DefaultExecutor implements Executor {
             }
             return res;
         } catch (SQLException e) {
+            e.printStackTrace();
             return null;
         } finally {
             try {
@@ -153,6 +155,7 @@ public class DefaultExecutor implements Executor {
             }
             return list;
         } catch (SQLException e) {
+            e.printStackTrace();
             return null;
         }
 
@@ -176,14 +179,14 @@ public class DefaultExecutor implements Executor {
     private void setParms(Object parms, PreparedStatement statement) throws SQLException {
         if (parms != null)
             if (parms.getClass().isArray()) {
-                for (int i = 1; i <=Array.getLength(parms); i++)
-                    statement.setObject(i, Array.get(parms, i-1));
+                for (int i = 1; i <= Array.getLength(parms); i++)
+                    statement.setObject(i, Array.get(parms, i - 1));
             } else
                 statement.setObject(1, parms);
     }
 
-    public void close() throws IOException {
-
+    public void close() {
+        localCache = null;
     }
 
 
