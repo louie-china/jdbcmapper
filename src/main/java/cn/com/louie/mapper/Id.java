@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Created by Administrator on 2016/5/4.
+ * Created by Louie on 2016/5/4.
  * 主键标注
  */
 @Target({ElementType.FIELD})

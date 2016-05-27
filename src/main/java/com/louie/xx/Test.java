@@ -1,10 +1,8 @@
-package com.lll;
+package com.louie.xx;
 
 import cn.com.louie.SqlSessionFactoryBean;
 import cn.com.louie.config.Configuration;
 import cn.com.louie.mapper.*;
-
-import java.util.List;
 
 /**
  * Created by Administrator on 2016/5/9.
@@ -16,7 +14,7 @@ public class Test extends BaseEO {
     @Id
     @Generate
     private int id;//测试id标注及自增标注
-    @Column(name = "name_louie")
+    @Column(name = "name_louie_x")
     private String name;//测试column的name标注
     @Column
     private String logs;//测试有标注无值
@@ -29,10 +27,10 @@ public class Test extends BaseEO {
     public static void main(String[] args) throws Exception {
 
         SqlSessionFactoryBean factory=new SqlSessionFactoryBean();
-        factory.setPackageScan("com.*.xx");
+        factory.setPackageScan("org.springframework.beans.factory.access");
 
         System.out.println(Configuration.getInstans().eoutils.size()+"xxxxxxxxxxxx");
-        EOUtil eoUtil=Configuration.getInstans().eoutils.get(com.lll.xx.Test.class);
+        EOUtil eoUtil=Configuration.getInstans().eoutils.get(Test.class);
         System.out.println(eoUtil.buildSelect(null));
         System.out.println(eoUtil.gettableName());
 

@@ -7,6 +7,10 @@ import java.util.concurrent.locks.ReadWriteLock;
 /**
  * Created by Louie on 2016/5/23.
  */
+
+/**
+ * 本地基础缓存
+ */
 public class PerpetualCache implements Cache {
 
     private String id;

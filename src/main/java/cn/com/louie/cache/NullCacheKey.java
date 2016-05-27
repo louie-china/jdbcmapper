@@ -1,7 +1,11 @@
 package cn.com.louie.cache;
 
 /**
- * Created by Administrator on 2016/5/23.
+ * Created by Louie on 2016/5/23.
+ */
+
+/**
+ * 默认空缓存
  */
 public final class NullCacheKey extends CacheKey {
 

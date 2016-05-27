@@ -15,7 +15,11 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/5/23.
+ * Created by Louie on 2016/5/23.
+ */
+
+/**
+ * 初始化工厂类
  */
 public class SqlSessionFactoryBean implements FactoryBean<SqlSessionFactory>, InitializingBean {
     private String packageScan;
@@ -23,10 +27,12 @@ public class SqlSessionFactoryBean implements FactoryBean<SqlSessionFactory>, In
     private boolean useCache;
     private SqlSessionFactory sqlSessionFactory;
 
-    public DataSource getDataSource() {
-        return dataSource;
-    }
 
+    /**
+     * 设置数据源
+     *
+     * @param dataSource
+     */
     public void setDataSource(DataSource dataSource) {
         if (dataSource instanceof TransactionAwareDataSourceProxy)
             Configuration.getInstans().dataSource = ((TransactionAwareDataSourceProxy) dataSource).getTargetDataSource();
@@ -34,6 +40,11 @@ public class SqlSessionFactoryBean implements FactoryBean<SqlSessionFactory>, In
             Configuration.getInstans().dataSource = dataSource;
     }
 
+    /**
+     * 扫描装载实体
+     *
+     * @param scan
+     */
     public void setPackageScan(String scan) {
         PackageScan packageScan = new PackageScan(scan);
         List<String> classes = null;
@@ -42,7 +53,7 @@ public class SqlSessionFactoryBean implements FactoryBean<SqlSessionFactory>, In
             for (String className : classes) {
                 Class clazz = Class.forName(className, true, getClass().getClassLoader());
                 if (clazz.isAnnotationPresent(Entity.class)) {
-                    Configuration.getInstans().eoutils.put(clazz.getSimpleName(), new EOUtil(clazz));
+                    Configuration.getInstans().eoutils.put(clazz, new EOUtil(clazz));
                 }
             }
         } catch (IOException e) {
@@ -53,6 +64,11 @@ public class SqlSessionFactoryBean implements FactoryBean<SqlSessionFactory>, In
 
     }
 
+    /**
+     * 设置2级缓存是否开启
+     *
+     * @param useCache
+     */
     public void setUseCache(boolean useCache) {
         Configuration.getInstans().useCache = useCache;
     }

@@ -16,7 +16,7 @@ import java.util.Map;
  * Created by Administrator on 2016/5/23.
  */
 public class Configuration {
-    public Map<String, EOUtil> eoutils;
+    public Map<Class, EOUtil> eoutils;
     public Cache cache;
     public DataSource dataSource;
     public boolean useCache = false;
@@ -24,7 +24,7 @@ public class Configuration {
 
     private Configuration() {
         if (eoutils == null)
-            eoutils = new HashMap<String, EOUtil>();
+            eoutils = new HashMap<Class, EOUtil>();
         if (cache == null)
             cache = new TimerCache(new PerpetualCache("globalCache"), 10 * 1000);
     }

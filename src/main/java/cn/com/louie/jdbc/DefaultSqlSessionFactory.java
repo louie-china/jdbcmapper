@@ -3,7 +3,7 @@ package cn.com.louie.jdbc;
 import cn.com.louie.config.Configuration;
 
 /**
- * Created by Administrator on 2016/5/23.
+ * Created by Louie on 2016/5/23.
  */
 public class DefaultSqlSessionFactory implements SqlSessionFactory {
     public SqlSession getSession() {

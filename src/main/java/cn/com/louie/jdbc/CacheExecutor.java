@@ -9,7 +9,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/5/24.
+ * Created by Louie on 2016/5/24.
+ */
+
+/**
+ * 缓存执行器
  */
 public class CacheExecutor implements Executor {
 

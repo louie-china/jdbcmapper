@@ -3,7 +3,11 @@ package cn.com.louie.cache;
 import java.util.concurrent.locks.ReadWriteLock;
 
 /**
- * Created by Administrator on 2016/5/23.
+ * Created by Louie on 2016/5/23.
+ */
+
+/**
+ * 时效缓存
  */
 public class TimerCache implements Cache {
     private Cache delegate;

@@ -18,7 +18,11 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 /**
- * Created by Administrator on 2016/5/23.
+ * Created by Louie on 2016/5/23.
+ */
+
+/**
+ * 默认执行器
  */
 public class DefaultExecutor implements Executor {
     private final static Logger logger = Logger.getLogger("DefaultExecutor");
@@ -44,7 +48,9 @@ public class DefaultExecutor implements Executor {
             resultSet = statement.executeQuery();
             Object o = null;
             list = new ArrayList();
-            EOUtil eoUtil = Configuration.getInstans().eoutils.get(eClass.getSimpleName());
+            EOUtil eoUtil = Configuration.getInstans().eoutils.get(eClass);
+            if (eoUtil == null)
+                throw new EntityNotFoundException("需要在实体上加入@Entity标注");
             Map<String, QType> map = eoUtil.getColums();
             while (resultSet.next()) {
                 o = eClass.newInstance();

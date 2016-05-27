@@ -1,5 +1,2 @@
-# spring-jdbc-mapper
-这是一个spring-jdbc的通用mapper工具，用户只用在bean上集成BeaseEO既可自动完成rowmapper   相对与原生的BeanPropertyRowMapper和原生的RowMapper更加灵活，我们可以通过自定义的标注来完成实体bean和数据库字段的对应，而不用考虑和数据库字段的复杂性
-同时实现了单表的查询语句构建，插入语句自动构建，以及更新语句的自动构建，在写插入语句的时候也不用去写那么长的sql   简单的就说到这儿了  剩下的大家自己去使用一下既可感受它带来的方便，可以让我们轻松的实现mybatis一样的实体映射又不用写那么多恶心
-的xml文件及代码
-
+# jdbc-mapper
+一个基于查询结果的ORM

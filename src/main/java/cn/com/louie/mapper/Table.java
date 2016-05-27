@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Created by Administrator on 2016/5/4.
+ * Created by Louie on 2016/5/4.
  * 表名标注    未标注则取实体名字
  */
 @Target({ElementType.TYPE})
