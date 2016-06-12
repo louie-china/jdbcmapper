@@ -1,5 +1,7 @@
 package cn.com.louie.mapper;
 
+import org.springframework.util.CollectionUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -25,8 +27,8 @@ public class PackageScan {
             basePackage = basePackage.split("\\*")[0];
             if (basePackage.endsWith("."))
                 basePackage = basePackage.substring(0, basePackage.length() - 1);
-            this.basePackage = basePackage;
         }
+        this.basePackage = basePackage;
         this.cl = getClass().getClassLoader();
 
     }
@@ -44,10 +46,13 @@ public class PackageScan {
 
     private List<String> doScan(String packageName, List<String> nameList) throws IOException {
         String splashPath = this.dotToSplash(packageName);
-        Enumeration<URL> dirs = Thread.currentThread().getContextClassLoader().getResources(packageName);
+
+        Enumeration<URL> dirs = cl.getResources(splashPath);
         while (dirs.hasMoreElements()) {
             forScan(dirs.nextElement(), splashPath, nameList, packageName);
         }
+        if (CollectionUtils.isEmpty(nameList))
+            forScan(cl.getResource(splashPath), splashPath, nameList, packageName);
         return nameList;
     }
 
@@ -125,7 +130,7 @@ public class PackageScan {
     }
 
     private boolean isClassFile(String name) {
-        return name.endsWith(".class");
+        return name.endsWith(".html");
     }
 
     private boolean isJarFile(String name) {
@@ -167,4 +172,7 @@ public class PackageScan {
         return trimmed.substring(splashIndex);
     }
 
+    public static void main(String[] args) {
+        PackageScan packageScan = new PackageScan("com.louie.*");
+    }
 }

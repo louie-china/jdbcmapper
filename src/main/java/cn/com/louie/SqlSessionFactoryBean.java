@@ -6,6 +6,7 @@ import cn.com.louie.jdbc.SqlSessionFactory;
 import cn.com.louie.mapper.EOUtil;
 import cn.com.louie.mapper.Entity;
 import cn.com.louie.mapper.PackageScan;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
@@ -22,10 +23,12 @@ import java.util.List;
  * 初始化工厂类
  */
 public class SqlSessionFactoryBean implements FactoryBean<SqlSessionFactory>, InitializingBean {
+    private static final Logger logger=Logger.getLogger(SqlSessionFactoryBean.class);
     private String packageScan;
     private DataSource dataSource;
     private boolean useCache;
     private SqlSessionFactory sqlSessionFactory;
+
 
 
     /**
@@ -51,6 +54,7 @@ public class SqlSessionFactoryBean implements FactoryBean<SqlSessionFactory>, In
         try {
             classes = packageScan.getFullyQualifiedClassNameList();
             for (String className : classes) {
+                logger.info("scan for package:"+className);
                 Class clazz = Class.forName(className, true, getClass().getClassLoader());
                 if (clazz.isAnnotationPresent(Entity.class)) {
                     Configuration.getInstans().eoutils.put(clazz, new EOUtil(clazz));
