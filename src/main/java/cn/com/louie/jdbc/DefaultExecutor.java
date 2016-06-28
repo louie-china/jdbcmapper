@@ -137,6 +137,29 @@ public class DefaultExecutor implements Executor {
 
     }
 
+    public void insertBySQLNoId(String sql, Object parms) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = Configuration.getInstans().dataSource.getConnection();
+            statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            setParms(parms, statement);
+            localCache.clear();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (statement != null)
+                    statement.close();
+                if (connection != null)
+                    connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
     public List Query(String sql, Object parms) {
         CacheKey cacheKey = new CacheKey(new Object[]{sql, parms});
         if (localCache.getObject(cacheKey) != null)

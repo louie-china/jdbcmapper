@@ -12,7 +12,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = "test")
-public class Test extends BaseEO {
+public class
+Test extends BaseEO {
     @Id
     @Generate
     private int id;//测试id标注及自增标注
@@ -34,7 +35,14 @@ public class Test extends BaseEO {
         System.out.println(Configuration.getInstans().eoutils.size()+"xxxxxxxxxxxx");
         EOUtil eoUtil=Configuration.getInstans().eoutils.get(com.lll.xx.Test.class);
         System.out.println(eoUtil.buildSelect(null));
-        System.out.println(eoUtil.gettableName());
+//        System.out.println(eoUtil.gettableName());
+
+//        System.out.println(400/6);
+//        System.out.println((400/5.8)/1280);
+//        System.out.println(16500*100/71400);
+
+
+        System.out.println(15000*0.12);
 
 //        com.lll.Test test = new com.lll.Test();
 //        test.setId(0);

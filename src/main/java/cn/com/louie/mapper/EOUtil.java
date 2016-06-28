@@ -168,9 +168,9 @@ public class EOUtil {
      */
     public boolean isGenerate(String field) {
         try {
-            return clazz.getDeclaredField(field).getAnnotation(Generate.class) == null;
+            return clazz.getDeclaredField(field).getAnnotation(Generate.class) != null;
         } catch (NoSuchFieldException var3) {
-            return true;
+            return false;
         }
     }
 

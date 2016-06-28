@@ -45,6 +45,8 @@ public interface Executor extends Closeable {
      */
     public Object insertBySQL(String sql, Object parms);
 
+    public void insertBySQLNoId(String sql, Object parms);
+
     /**
      * 根据sql查询返回map列表
      * @param sql sql语句

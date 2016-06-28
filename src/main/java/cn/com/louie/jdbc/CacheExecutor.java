@@ -48,6 +48,12 @@ public class CacheExecutor implements Executor {
         return object;
     }
 
+    @Override
+    public void insertBySQLNoId(String sql, Object parms) {
+        baseExecutor.insertBySQLNoId(sql, parms);
+        cache.clear();
+    }
+
     public List Query(String sql, Object parms) {
         CacheKey cacheKey = new CacheKey(new Object[]{sql, parms});
         if (cache.getObject(cacheKey) != null)

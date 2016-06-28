@@ -105,7 +105,7 @@ public interface SqlSession extends Closeable {
      * @param parms 参数值
      * @return
      */
-    public Object insertBySQL(String sql, Object parms);
+    public Object insertBySQL(String sql, Object parms,boolean isG);
 
     /**
      * 获取连接

@@ -161,7 +161,12 @@ public class DefaultSqlSession implements SqlSession {
         if (eoUtil == null)
             throw new EntityNotFoundException("需要在实体上加入@Entity标注");
         String sql = eoUtil.buildInsert(t);
-        return executor.insertBySQL(sql, null);
+        if (eoUtil.isGenerate(eoUtil.primaryKey))
+            return executor.insertBySQL(sql, null);
+        else {
+            executor.insertBySQLNoId(sql, null);
+            return null;
+        }
     }
 
     /**
@@ -171,8 +176,13 @@ public class DefaultSqlSession implements SqlSession {
      * @param parms 参数值
      * @return
      */
-    public Object insertBySQL(String sql, Object parms) {
-        return executor.insertBySQL(sql, parms);
+    public Object insertBySQL(String sql, Object parms, boolean isG) {
+        if (isG)
+            return executor.insertBySQL(sql, parms);
+        else {
+            executor.insertBySQLNoId(sql, parms);
+            return null;
+        }
     }
 
     /**
