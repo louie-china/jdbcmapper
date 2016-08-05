@@ -59,22 +59,29 @@ public class PackageScan {
     private List<String> doChildScan(String packageName, List<String> nameList) throws IOException {
         String splashPath = this.dotToSplash(packageName);
         URL url = cl.getResource(splashPath);
+        if(url!=null)
         forScan(url, splashPath, nameList, packageName);
         return nameList;
     }
 
     public List<String> forScan(URL url, String splashPath, List<String> nameList, String packageName) throws IOException {
-        String filePath = this.getRootPath(url);
-        List<String> names = null;
-        if (isJarFile(filePath)) {
-            try {
-                names = readFromJarFile(filePath, splashPath);
-            } catch (IOException e) {
-                names = new ArrayList<String>();
-            }
+        List<String> names = new ArrayList<String>();
+        try {
+            String filePath = this.getRootPath(url);
 
-        } else {
-            names = readFromDirectory(filePath);
+            if (isJarFile(filePath)) {
+                try {
+                    names = readFromJarFile(filePath, splashPath);
+                } catch (IOException e) {
+                    names = new ArrayList<String>();
+                }
+
+            } else {
+                names = readFromDirectory(filePath);
+            }
+        }catch (NullPointerException e)
+        {
+
         }
 
         for (String name : names) {
@@ -130,7 +137,7 @@ public class PackageScan {
     }
 
     private boolean isClassFile(String name) {
-        return name.endsWith(".html");
+        return name.endsWith(".class");
     }
 
     private boolean isJarFile(String name) {

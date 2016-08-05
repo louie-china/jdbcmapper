@@ -4,6 +4,7 @@ import cn.com.louie.SqlSessionFactoryBean;
 import cn.com.louie.config.Configuration;
 import cn.com.louie.mapper.*;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 /**
@@ -22,27 +23,58 @@ Test extends BaseEO {
     @Column
     private String logs;//测试有标注无值
 
+
     private String email;//测试无标注
     @Transient
     private String none;//测试临时字段标注
 
+    int p = 0;//瓶子
+    int g = 0;//盖子
+    int m = 10;//钱
+    int count = 0;
+
+    private void main() {
+
+        if ((m = m - 2) >= 0) {
+            add();
+        }
+
+        if (p >= 2) {
+            add();
+            p = p - 2;
+        }
+        if (g >= 2) {
+            p++;
+            g = g - 2;
+        }
+
+        if (p >= 2 || g >= 4 || m > 0)
+            main();
+    }
+
+    private void add() {
+        count++;
+        p++;
+        g++;
+    }
+
 
     public static void main(String[] args) throws Exception {
-
-        SqlSessionFactoryBean factory=new SqlSessionFactoryBean();
-        factory.setPackageScan("com.*.xx");
-
-        System.out.println(Configuration.getInstans().eoutils.size()+"xxxxxxxxxxxx");
-        EOUtil eoUtil=Configuration.getInstans().eoutils.get(com.lll.xx.Test.class);
-        System.out.println(eoUtil.buildSelect(null));
+        Test m= new Test();
+        m.main();
+        System.out.println("瓶子：" + m.p + "盖子：" + m.g + "酒：" + m.count);
+//        SqlSessionFactoryBean factory=new SqlSessionFactoryBean();
+//        factory.setPackageScan("com.*.xx");
+//
+//        System.out.println(Configuration.getInstans().eoutils.size()+"xxxxxxxxxxxx");
+//        EOUtil eoUtil=Configuration.getInstans().eoutils.get(com.lll.xx.Test.class);
+//        System.out.println(eoUtil.buildSelect(null));
 //        System.out.println(eoUtil.gettableName());
 
 //        System.out.println(400/6);
 //        System.out.println((400/5.8)/1280);
 //        System.out.println(16500*100/71400);
 
-
-        System.out.println(15000*0.12);
 
 //        com.lll.Test test = new com.lll.Test();
 //        test.setId(0);

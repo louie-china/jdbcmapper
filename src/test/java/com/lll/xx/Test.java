@@ -26,8 +26,11 @@ public class Test extends BaseEO {
 
     public static void main(String[] args) throws Exception {
 
+
+
+
         SqlSessionFactoryBean factory=new SqlSessionFactoryBean();
-        factory.setPackageScan("org.springframework.beans.factory.access");
+        factory.setPackageScan("com.lll");
 
         System.out.println(Configuration.getInstans().eoutils.size()+"xxxxxxxxxxxx");
         EOUtil eoUtil=Configuration.getInstans().eoutils.get(Test.class);
